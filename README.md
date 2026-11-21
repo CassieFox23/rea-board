@@ -28,7 +28,9 @@ Clone this repository. There is nothing to install.
 | `python3 -I page.py --board data/board.json --out data/board.html` | draws the page again from a saved board, with no network |
 | `python3 -I lanes.py --board data/board.json` | counts a saved board, with no network |
 
-The files go in `data/`: `board.json`, `board.html` and `stats.tsv`. Open `board.html` in any browser. To move the data folder or to name a mirror, copy `config.example.json` to `config.json`. The variable `REA_BOARD_CONFIG` names a different file to use in its place.
+Run the commands from the repository folder. `-I` makes Python ignore your own Python settings, so the scripts run the same everywhere.
+
+The files go in `data/`: `board.json`, `board.prev.json` (the board before), `board.html` and `stats.tsv`. Open `board.html` in any browser. To move the data folder or to use a mirror, copy `config.example.json` to `config.json` and change it: `data_dir` is the data folder, and `mirror` is the path to a bare clone of morluto/rea. The variable `REA_BOARD_CONFIG` names a different file to use in its place.
 
 ## The columns
 
@@ -46,7 +48,9 @@ Some groups make no card: pull requests that wait on their author, pull requests
 
 ## Help
 
-Open a [GitHub issue](https://github.com/CassieFox23/rea-board/issues).
+Open a [GitHub issue](https://github.com/CassieFox23/rea-board/issues). For a security problem, read [SECURITY.md](SECURITY.md) and do not open an issue.
+
+A card is a best guess: read [DISCLAIMER.md](DISCLAIMER.md). What the board sends and to whom is in [PRIVACY.md](PRIVACY.md).
 
 ## Contributing
 

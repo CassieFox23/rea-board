@@ -136,8 +136,8 @@ class ConfTest(unittest.TestCase):
             ex = json.load(fh)
         self.assertEqual(sorted(ex), ["data_dir", "mirror"])
         self.use(json.dumps(ex))
-        self.assertEqual(conf.data_dir(), ex["data_dir"])
-        self.assertEqual(conf.mirror(), ex["mirror"])
+        self.assertEqual(conf.data_dir(), os.path.join(conf.CODE, "data"))
+        self.assertIsNone(conf.mirror())
 
 
 if __name__ == "__main__":

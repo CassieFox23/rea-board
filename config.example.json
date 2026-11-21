@@ -1,4 +1,4 @@
 {
-  "data_dir": "/path/to/rea-board-data",
-  "mirror": "/path/to/rea.git"
+  "data_dir": "data",
+  "mirror": null
 }
