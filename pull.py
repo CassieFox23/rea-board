@@ -41,9 +41,9 @@ PR_QUERY = """query($cursor: String) {
         number title url createdAt updatedAt isDraft additions deletions changedFiles mergeable
         authorAssociation
         author { login }
-        labels(first: 20) { nodes { name } }
+        labels(first: 20) { totalCount nodes { name } }
         commits(last: 1) { nodes { commit { committedDate statusCheckRollup { state } } } }
-        closingIssuesReferences(first: 10) { nodes { number } }
+        closingIssuesReferences(first: 10) { totalCount nodes { number } }
       }
     }
   }
@@ -57,7 +57,7 @@ ISSUE_QUERY = """query($cursor: String) {
       nodes {
         number title url createdAt updatedAt authorAssociation
         author { login }
-        labels(first: 20) { nodes { name } }
+        labels(first: 20) { totalCount nodes { name } }
       }
     }
   }
@@ -111,6 +111,14 @@ def paged(query, getter, **variables):
         cursor = conn["pageInfo"]["endCursor"]
 
 
+def read_all(n, field):
+    """The nodes of a connection on item n, with a warning when GitHub has more than the query asked for."""
+    conn = n[field]
+    if conn.get("totalCount", 0) > len(conn["nodes"]):
+        sys.stderr.write("#%d: %s has %d, only the first %d were read\n" % (n["number"], field, conn["totalCount"], len(conn["nodes"])))
+    return conn["nodes"]
+
+
 def norm_pr(n):
     commits = n["commits"]["nodes"]
     roll = None
@@ -125,7 +133,7 @@ def norm_pr(n):
         "association": n["authorAssociation"],
         "createdAt": n["createdAt"],
         "updatedAt": n["updatedAt"],
-        "labels": sorted(l["name"] for l in n["labels"]["nodes"]),
+        "labels": sorted(l["name"] for l in read_all(n, "labels")),
         "url": n["url"],
         "isDraft": n["isDraft"],
         "additions": n["additions"],
@@ -134,7 +142,7 @@ def norm_pr(n):
         "mergeable": n["mergeable"],
         "ci": roll,
         "pushedAt": pushed,
-        "closes": sorted(c["number"] for c in n["closingIssuesReferences"]["nodes"]),
+        "closes": sorted(c["number"] for c in read_all(n, "closingIssuesReferences")),
     }
 
 
@@ -173,7 +181,7 @@ def norm_issue(n):
         "association": n["authorAssociation"],
         "createdAt": n["createdAt"],
         "updatedAt": n["updatedAt"],
-        "labels": sorted(l["name"] for l in n["labels"]["nodes"]),
+        "labels": sorted(l["name"] for l in read_all(n, "labels")),
         "url": n["url"],
     }
 

@@ -142,6 +142,24 @@ class NormPrTest(unittest.TestCase):
         self.assertEqual(pull.norm_pr(pr_node(author=None))["author"], "ghost")
 
 
+class ReadAllTest(unittest.TestCase):
+    def test_more_than_the_query_asked_for_is_said_on_stderr(self):
+        n = {"number": 7, "labels": {"totalCount": 25, "nodes": [{"name": "a"}]}}
+        err = io.StringIO()
+        with contextlib.redirect_stderr(err):
+            self.assertEqual(pull.read_all(n, "labels"), [{"name": "a"}])
+        self.assertIn("#7: labels has 25, only the first 1 were read", err.getvalue())
+
+    def test_a_full_read_says_nothing_and_both_queries_ask_for_the_total(self):
+        err = io.StringIO()
+        with contextlib.redirect_stderr(err):
+            pull.read_all({"number": 7, "labels": {"totalCount": 1, "nodes": [{"name": "a"}]}}, "labels")
+        self.assertEqual(err.getvalue(), "")
+        self.assertIn("closingIssuesReferences(first: 10) { totalCount", pull.PR_QUERY)
+        self.assertEqual(pull.PR_QUERY.count("labels(first: 20) { totalCount"), 1)
+        self.assertEqual(pull.ISSUE_QUERY.count("labels(first: 20) { totalCount"), 1)
+
+
 class NormIssueTest(unittest.TestCase):
     def test_the_item_keys(self):
         """An issue item has exactly these keys, with the labels sorted."""
