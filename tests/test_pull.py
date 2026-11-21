@@ -305,6 +305,27 @@ class GqlTest(unittest.TestCase):
         self.assertEqual(len(self.e.gh_calls()), 5)
         self.assertEqual([c.args for c in self.sleep.call_args_list], [(2,), (5,), (10,), (20,)])
 
+    def test_an_error_a_retry_cannot_fix_stops_at_once(self):
+        self.e.gh_fixture("q", match=r"^api graphql ", stderr="HTTP 401: Bad credentials\n", exit=1)
+        with contextlib.redirect_stderr(io.StringIO()):
+            with self.assertRaises(SystemExit) as cm:
+                pull.gql("query { x }")
+        self.assertIn("a retry will not help", str(cm.exception))
+        self.assertEqual(len(self.e.gh_calls()), 1)
+        self.sleep.assert_not_called()
+
+    def test_a_missing_gh_stops_with_a_message(self):
+        with mock.patch.object(pull.subprocess, "run", side_effect=FileNotFoundError("gh")):
+            with self.assertRaises(SystemExit) as cm:
+                pull.gql("query { x }")
+        self.assertIn("gh not found", str(cm.exception))
+
+    def test_anything_but_a_query_is_refused_before_gh_runs(self):
+        with self.assertRaises(SystemExit) as cm:
+            pull.gql("mutation { x }")
+        self.assertIn("refusing", str(cm.exception))
+        self.assertEqual(self.e.gh_calls(), [])
+
     def test_graphql_errors_stop_it(self):
         self.e.gh_fixture("q", match=r"^api graphql ", json={"errors": [{"message": "no"}]})
         with self.assertRaises(SystemExit) as cm:
@@ -461,6 +482,18 @@ class MainTest(unittest.TestCase):
         self.assertFalse(second["firstRun"])
         self.assertEqual({(i["kind"], i["number"]) for i in second["items"] if i["new"]}, {("PR", 4), ("issue", 23)})
         self.assertEqual(self.board("board.prev.json"), first)
+
+    def test_an_old_board_that_cannot_be_read_counts_as_the_first_run(self):
+        for bad in ("{not json", '{"items": [{"x": 1}]}', "[]"):
+            os.makedirs(self.data, exist_ok=True)
+            with open(os.path.join(self.data, "board.json"), "w", encoding="utf-8") as fh:
+                fh.write(bad)
+            err = io.StringIO()
+            with contextlib.redirect_stderr(err):
+                self.run_main()
+            self.assertTrue(self.board()["firstRun"], bad)
+            self.assertIn("could not be read", err.getvalue())
+            os.remove(os.path.join(self.data, "board.json"))
 
     def test_no_item_carries_a_mine_flag_and_no_search_is_made(self):
         self.run_main()

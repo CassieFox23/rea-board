@@ -28,6 +28,7 @@ import sort  # noqa: E402
 REPO = conf.repo()
 REPO_OWNER, REPO_NAME = REPO.split("/", 1)
 RETRY_WAITS = (2, 5, 10, 20)
+FINAL = re.compile(r"HTTP 40[14]|Bad credentials|gh auth login|Could not resolve")
 MERGE_WAITS = (5, 10, 20)
 MERGE_BATCH = 50
 
@@ -66,17 +67,23 @@ COST = {"total": 0, "remaining": None, "calls": 0}
 
 
 def gql(query, **variables):
-    assert query.lstrip().startswith("query")
+    if not query.lstrip().startswith("query"):
+        sys.exit("gql: refusing to send anything but a query")
     cmd = ["gh", "api", "graphql", "-f", "query=" + query]
     for k, v in variables.items():
         if v is not None:
             cmd += ["-f", "%s=%s" % (k, v)]
     r = None
     for attempt in range(len(RETRY_WAITS) + 1):
-        r = subprocess.run(cmd, capture_output=True, text=True)
+        try:
+            r = subprocess.run(cmd, capture_output=True, text=True)
+        except FileNotFoundError:
+            sys.exit("gh not found: install the GitHub CLI and log in with gh auth login")
         if r.returncode == 0:
             break
         sys.stderr.write(r.stderr)
+        if FINAL.search(r.stderr):
+            sys.exit("gh failed with exit code %d; a retry will not help" % r.returncode)
         if attempt < len(RETRY_WAITS):
             sys.stderr.write("retry %d of %d in %ds\n" % (attempt + 1, len(RETRY_WAITS), RETRY_WAITS[attempt]))
             time.sleep(RETRY_WAITS[attempt])
@@ -266,9 +273,11 @@ def main():
 
     prev_keys = None
     if os.path.exists(board_json):
-        with open(board_json, encoding="utf-8") as f:
-            old = json.load(f)
-        prev_keys = {(i["kind"], i["number"]) for i in old["items"]}
+        try:
+            with open(board_json, encoding="utf-8") as f:
+                prev_keys = {(i["kind"], i["number"]) for i in json.load(f)["items"]}
+        except (OSError, ValueError, KeyError, TypeError) as err:
+            sys.stderr.write("the old board.json could not be read (%s), so this pull counts as the first\n" % err)
     first_run = prev_keys is None
     for it in items:
         it["new"] = (not first_run) and (it["kind"], it["number"]) not in prev_keys
