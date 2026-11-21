@@ -16,6 +16,12 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      - name: Mirror REA's main branch, last 90 days, commit messages only
+        run: |
+          git clone -q --bare --filter=blob:none --single-branch --branch main \
+            --shallow-since="$(date -u -d '90 days ago' +%Y-%m-%d)" \
+            https://github.com/morluto/rea.git rea.git
+          echo '{"mirror": "rea.git"}' > config.json
       - name: Pull the board
         env:
           GH_TOKEN: ${{ github.token }}

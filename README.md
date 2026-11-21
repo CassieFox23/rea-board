@@ -38,7 +38,7 @@ The board shows fewer items than are open, because these groups do not get a car
 - issues that are part of the maintainers' plan
 - issues that an open pull request already fixes
 
-"Maybe already fixed" needs a local copy (mirror) of REA to read the commits. The hosted board has no mirror yet, so this column is empty there.
+"Maybe already fixed" needs a local copy (mirror) of REA to read the commits from the last 90 days. The hosted board makes one on every update. If you run the board yourself without a mirror, this column is empty.
 
 ## Run it yourself
 
