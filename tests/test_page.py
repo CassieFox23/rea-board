@@ -342,10 +342,9 @@ class RenderTest(SetUp):
         for word in ("transition", "animation", "scroll-behavior", "@keyframes"):
             self.assertNotIn(word, rest, word)
 
-    def test_the_repo_comes_from_the_config(self):
-        self.e.write_config({"repo": "someone/else"})
+    def test_the_header_links_rea(self):
         text = page.render([], TAKEN)
-        self.assertIn('<a href="https://github.com/someone/else">someone/else</a>', text)
+        self.assertIn('<a href="https://github.com/morluto/rea">morluto/rea</a>', text)
 
     def test_a_time_in_another_zone_is_told_in_utc(self):
         self.assertIn("Data from GitHub at 2027-01-01 00:05 UTC.", page.render([], datetime.fromisoformat("2027-01-01T01:05:00+01:00")))
