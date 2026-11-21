@@ -28,7 +28,7 @@ import sort  # noqa: E402
 REPO = conf.repo()
 REPO_OWNER, REPO_NAME = REPO.split("/", 1)
 RETRY_WAITS = (2, 5, 10, 20)
-FINAL = re.compile(r"HTTP 40[14]|Bad credentials|gh auth login|Could not resolve")
+FINAL = re.compile(r"HTTP 40[14]|Bad credentials|gh auth login|Could not resolve to a")
 MERGE_WAITS = (5, 10, 20)
 MERGE_BATCH = 50
 
