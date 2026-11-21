@@ -36,7 +36,7 @@ This Code of Conduct applies within all community spaces, and also applies when 
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the maintainer, who is the community leader responsible for enforcement in this small project. GitHub gives this repository one private route, the report form on its Security tab ("Report a vulnerability"); use it for conduct reports too. Only the maintainer can read it. All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the maintainer, who is the community leader responsible for enforcement in this small project. Use the private report form on its Security tab ("Report a vulnerability") for conduct reports too. Only the maintainer can read it. All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the reporter of any incident.
 
