@@ -382,6 +382,14 @@ class NamedInMainTest(unittest.TestCase):
         later = self.commit("later (#15)")
         self.assertEqual(pull.named_in_main()[15], [later])
 
+    def test_a_plain_bare_clone_is_brought_up_to_date_too(self):
+        self.make_mirror("first (#1)")
+        bare = os.path.join(self.d, "bare.git")
+        git(self.d, "clone", "-q", "--bare", self.origin, bare)
+        self.mirror_config(bare)
+        later = self.commit("later (#16)")
+        self.assertEqual(pull.named_in_main()[16], [later])
+
     def test_main_since_limits_the_log(self):
         self.make_mirror("dated (#1)", date="2020-06-15T12:00:00+00:00")
         self.mirror_config(self.mirror, main_since="2021-01-01")

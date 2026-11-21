@@ -182,7 +182,7 @@ def named_in_main():
     mirror = conf.mirror()
     if not mirror:
         return {}
-    r = subprocess.run(["git", "-C", mirror, "fetch", "origin"], capture_output=True, text=True)
+    r = subprocess.run(["git", "-C", mirror, "fetch", "-q", "origin", "+refs/heads/main:refs/heads/main"], capture_output=True, text=True)
     if r.returncode != 0:
         sys.stderr.write(r.stderr)
         sys.exit("mirror fetch failed with exit code %d" % r.returncode)
