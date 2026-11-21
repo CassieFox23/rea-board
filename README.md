@@ -4,23 +4,29 @@
 
 Open pull requests and issues on morluto/rea, sorted by the help each one needs.
 
+**See the board: <https://cassiefox23.github.io/rea-board/>** (updated every 3 hours)
+
 ## What it is for
 
 [morluto/rea](https://github.com/morluto/rea) has many open items, and it is hard to see where help is wanted. This board sorts them by script and draws one static page of five columns of cards. It uses no AI model, it reads public data only and it never posts.
 
 ![The board: five columns of cards, one per kind of help](docs/board.png)
 
-## Needs
+## Run it yourself
+
+You only need this to work on the board or to see newer data.
+
+### Needs
 
 - Python 3.11 or newer
 - The [GitHub CLI](https://cli.github.com/) (`gh`), logged in
 - Optional: a bare mirror clone of morluto/rea, and `git`, to find items that a commit on main mentions
 
-## Install
+### Install
 
 Clone this repository. There is nothing to install.
 
-## Use
+### Use
 
 | Command | What it does |
 |---|---|

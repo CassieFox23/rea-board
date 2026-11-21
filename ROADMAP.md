@@ -4,11 +4,11 @@ This page lists what is done, what may come and what is not coming. Finished wor
 
 ## Now
 
-- The first public release.
+- The board on GitHub Pages, rebuilt every 3 hours by a GitHub Action.
 
 ## Next
 
-- The page on GitHub Pages, rebuilt on a timer by a GitHub Action, so you can see the board without running it yourself.
+- Nothing yet.
 
 ## Later
 

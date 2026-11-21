@@ -13,6 +13,10 @@ Nobody else is contacted. It reads public data only. It never posts, comments, l
 
 It writes local files only, in the `data/` folder: `board.json`, `board.prev.json`, `board.html` and `stats.tsv`. They hold public GitHub data and the counts. If you set a mirror in `config.json`, each pull runs `git fetch` on that clone and then reads it locally.
 
+## The hosted page
+
+The board at cassiefox23.github.io is served by GitHub Pages. GitHub learns what any visit to a Pages site tells it. The project adds no counter, cookie or script.
+
 ## The page
 
 The page it draws loads nothing from anywhere: no script, no font, no style file and no image. It links only to github.com. When you open a link, GitHub learns what any visit tells it.
