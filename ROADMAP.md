@@ -4,12 +4,11 @@ This page lists what is done, what may come and what is not coming. Finished wor
 
 ## Now
 
-- The board page and the script sort.
+- The first public release.
 
 ## Next
 
-- A way to run the pull on a timer.
-- Hosting the page, maybe. This is not checked yet.
+- The page on GitHub Pages, rebuilt on a timer by a GitHub Action, so you can see the board without running it yourself.
 
 ## Later
 
@@ -19,3 +18,5 @@ This page lists what is done, what may come and what is not coming. Finished wor
 
 - Any AI model.
 - Posting anything to GitHub.
+- Repositories other than morluto/rea.
+- Reading the text of an issue. The sort reads only the title and the labels.
