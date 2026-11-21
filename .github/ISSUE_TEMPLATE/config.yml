@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: What is planned
+    url: https://github.com/CassieFox23/rea-board/blob/main/ROADMAP.md
+    about: Now, next, later and not planned. Read before you suggest an idea.
+  - name: A security problem
+    url: https://github.com/CassieFox23/rea-board/blob/main/SECURITY.md
+    about: Report it privately by the route in SECURITY.md, not here.

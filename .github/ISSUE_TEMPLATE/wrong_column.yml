@@ -1,0 +1,33 @@
+name: Wrong column
+description: A card is in the wrong column
+labels: ["wrong column"]
+body:
+  - type: input
+    id: item
+    attributes:
+      label: The item number
+      description: The number of the pull request or issue on morluto/rea.
+      placeholder: "1234"
+    validations:
+      required: true
+  - type: input
+    id: current
+    attributes:
+      label: The column it is in
+      placeholder: Fix a bug
+    validations:
+      required: true
+  - type: input
+    id: wanted
+    attributes:
+      label: The column it should be in
+      placeholder: Ideas and questions
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: What the item is, and how you know.
+    validations:
+      required: true

@@ -1,0 +1,29 @@
+name: Idea
+description: A change or a new feature for the board
+labels: [enhancement]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What you would like
+      description: What it would add, and who it would help.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: What is hard today, with an example if you have one.
+    validations:
+      required: true
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Rules
+      options:
+        - label: It needs no AI model.
+          required: true
+        - label: It never posts anything to GitHub.
+          required: true
+        - label: It uses the Python standard library and the `gh` command line only.
+          required: true

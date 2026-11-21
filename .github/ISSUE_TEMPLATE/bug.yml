@@ -1,0 +1,33 @@
+name: Bug
+description: An error, or a page that does not draw
+labels: [bug]
+body:
+  - type: input
+    id: command
+    attributes:
+      label: The command you ran
+      placeholder: python3 -I pull.py
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: What happened
+      description: The full output or traceback.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: Python and system
+      description: The output of `python3 --version`, and your system.
+      placeholder: Python 3.12.3, Ubuntu 24.04
+    validations:
+      required: true

@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+import json, os, re, sys
+# fake gh: answers read calls from JSON fixtures in $FAKE_GH_DIR, logs every call to $FAKE_GH_DIR/calls.log, refuses writes (exit 3)
+# fixture: {"argv": [...]} exact match, or {"match": "regex"} on the argv joined by spaces; reply: "stdout" (text) or "json" (dumped), optional "stderr", "exit"
+argv = sys.argv[1:]
+d = os.environ.get("FAKE_GH_DIR")
+if not d:
+    sys.exit("fake gh: FAKE_GH_DIR not set")
+with open(os.path.join(d, "calls.log"), "a", encoding="utf-8") as fh:
+    fh.write(json.dumps(argv) + "\n")
+WRITE = {"pr": {"comment", "review", "merge", "create", "edit", "close", "reopen", "ready"},
+         "issue": {"comment", "create", "edit", "close", "reopen", "delete"}}
+
+
+def refuse(why):
+    print("fake gh: refusing a write (%s): gh %s" % (why, " ".join(argv)), file=sys.stderr)
+    sys.exit(3)
+
+
+for i, a in enumerate(argv):
+    m = None
+    if a in ("-X", "--method"):
+        m = argv[i + 1] if i + 1 < len(argv) else ""
+    elif a.startswith("--method="):
+        m = a[9:]
+    elif a.startswith("-X") and len(a) > 2:
+        m = a[2:]
+    if m and m.upper() in ("POST", "PATCH", "PUT", "DELETE"):
+        refuse(m)
+    if "mutation" in a and a.startswith(("query=", "-fquery=")):
+        refuse("graphql mutation")
+if len(argv) > 1 and argv[1] in WRITE.get(argv[0], ()):
+    refuse(argv[0] + " " + argv[1])
+fixtures = []
+for n in sorted(os.listdir(d)):
+    if n.endswith(".json"):
+        with open(os.path.join(d, n), encoding="utf-8") as fh:
+            fixtures.append(json.load(fh))
+line = " ".join(argv)
+hit = next((f for f in fixtures if f.get("argv") == argv), None) or next((f for f in fixtures if "match" in f and re.search(f["match"], line)), None)
+if not hit:
+    print("fake gh: no fixture for: gh " + line, file=sys.stderr)
+    sys.exit(1)
+if "json" in hit:
+    sys.stdout.write(json.dumps(hit["json"]))
+else:
+    sys.stdout.write(hit.get("stdout", ""))
+sys.stderr.write(hit.get("stderr", ""))
+sys.exit(hit.get("exit", 0))
