@@ -4,7 +4,7 @@
 
 **AI tools used, and what they did** ("none" is fine; see AI_POLICY.md):
 
-- [ ] standard library only, no AI model, and nothing is ever posted to GitHub
+- [ ] the code uses the standard library only, calls no AI model when it runs, and never posts to GitHub (AI help writing the change is fine; name it above)
 - [ ] the tests in CONTRIBUTING.md pass, and a new change has a test
 
 **Human owner:** <!-- @GitHub-handle. An AI agent leaves this part for its person; see AI_POLICY.md. -->

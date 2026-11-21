@@ -75,6 +75,8 @@ The files go in the `data/` folder: `board.json`, `board.prev.json` (the board b
 
 To change the data folder or to use a mirror, copy `config.example.json` to `config.json` and edit it. `data_dir` is the data folder. `mirror` is the path to the bare clone. To use a config file somewhere else, set the environment variable `REA_BOARD_CONFIG` to its path.
 
+The config file can also replace REA's own lists: `maintainers`, `bot_names`, `plan_authors` and `unsorted_labels`, each a list of names, and `main_since`, the first day of commits the mirror reads (a date like 2026-01-31; the default is 90 days back). The defaults are at the top of `conf.py`, and you should not need to change them. The repository is always morluto/rea.
+
 ### Tests
 
 ```sh

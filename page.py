@@ -5,9 +5,10 @@ usage: page.py [--board FILE] [--out FILE]
 Reads the board and nothing else: no network, and each item's stored kind and sort say its column. Defaults are board.json and
 board.html in the data folder (config data_dir). The page is one self-contained file with no script, no font or style file
 and no image, and its links go only to github.com. Cards are written oldest first; the sort buttons are plain CSS (radio
-buttons, :has() and order), so they need no script. Every value from the board is escaped. To change the columns, edit COLUMNS. The pairs in LEFT_OUT make no
-card: pull requests waiting on their author, the maintainers' own items and issues a pull request already fixes. pull.py
-writes the page after each pull.
+buttons, :has() and order), so they need no script. Every value from the board is escaped.
+To change the columns, edit COLUMNS. The pairs in LEFT_OUT make no card: pull requests waiting on their author, with no
+push for 14 days or more, or by the maintainers or a bot, and issues in the maintainers' plan or that an open pull request
+already fixes. pull.py writes the page after each pull.
 """
 import argparse
 import html
