@@ -4,7 +4,7 @@
 
 Open pull requests and issues on morluto/rea, sorted by the help each one needs.
 
-**See the board: <https://cassiefox23.github.io/rea-board/>** (updated every 3 hours)
+**[See the board](https://cassiefox23.github.io/rea-board/)** (updated every 3 hours)
 
 ## What it is for
 
