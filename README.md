@@ -12,7 +12,7 @@ Open pull requests and issues on morluto/rea, sorted by the help each one needs.
 
 This board sorts them with a script and builds one static web page of five columns of cards. The board uses no AI model. It reads public data only, and it never writes anything to GitHub.
 
-rea-board is an independent project. REA's maintainers do not run it.
+rea-board is an independent project. REA's maintainers do not run it. It is made by Cassie_Fox, who contributes to REA. It is not an official REA project.
 
 It was built with help from Claude, an AI model. The board itself uses no AI. See [AI_POLICY.md](AI_POLICY.md).
 
