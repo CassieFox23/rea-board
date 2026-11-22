@@ -14,6 +14,7 @@ All at the repo root, no package.
 - `config.example.json`: the two machine overrides someone might want, `data_dir` and `mirror`.
 - `tests/`: the tests, one file for each of `pull.py`, `sort.py`, `lanes.py`, `page.py` and `conf.py`.
 - `docs/board.png`: the README's picture of the page.
+- `docs/how-it-works.md`: the code explained in five levels, from what it does to its rules and side effects.
 - `tests/fakes/`: `gh`, a fake that answers reads from JSON fixtures and refuses writes, and `env.py`, which puts it on `PATH` for a test.
 - `CONTRIBUTING.md`, `AI_POLICY.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `PRIVACY.md`, `DISCLAIMER.md`, `ROADMAP.md`, `CHANGELOG.md` and `.github/` (issue forms, pull request template, CI, the Pages build that mirrors REA's main branch, pulls and publishes the page every 3 hours, Dependabot): the project's meta files.
 

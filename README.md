@@ -98,6 +98,8 @@ A card is a best guess: read [DISCLAIMER.md](DISCLAIMER.md). What the board send
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) and [AI_POLICY.md](AI_POLICY.md) first.
 
+[docs/how-it-works.md](docs/how-it-works.md) explains the code in five levels, from what it does to its rules and side effects.
+
 ## Credits
 
 - [GitHub CLI](https://cli.github.com/) (MIT), which the board uses to read GitHub

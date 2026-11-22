@@ -13,3 +13,4 @@ Follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - The board on GitHub Pages, pulled and published every 3 hours by a GitHub Action.
 - The hosted board fills "Maybe already fixed" from a mirror of the last 90 days of REA's main branch.
 - Three buttons that sort the cards in every column: oldest first, newest first or recently updated. They use CSS only.
+- A page that explains the code in five levels, from what it does to its rules and side effects: [docs/how-it-works.md](docs/how-it-works.md).
