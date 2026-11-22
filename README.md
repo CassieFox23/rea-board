@@ -32,8 +32,7 @@ Buttons above the board sort the cards in every column: oldest first, newest fir
 
 The board shows fewer items than are open, because these groups do not get a card:
 
-- pull requests that wait for their author
-- pull requests with no new commits for 14 days or more
+- pull requests that wait for their author: drafts, pull requests with merge conflicts, and pull requests whose checks fail, are still running or did not run, however old the last commit is
 - pull requests by the maintainers or by a bot
 - issues that are part of the maintainers' plan
 - issues that an open pull request already fixes
