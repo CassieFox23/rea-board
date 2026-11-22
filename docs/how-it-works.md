@@ -209,14 +209,15 @@ The tests use `unittest` and run offline. `tests/fakes/gh` is a fake `gh` comman
 This is how the code behaves today. To ask for a change, open an issue.
 
 - **An issue can have no card at all.** `closed_by` is built from every open PR, whatever its group. Say an issue's only fix is a PR with failed checks and no new commit for a month. The issue is inflight and the PR is dead, and both get no card.
-- **The 14 days only count for stuck PRs:** drafts, merge conflicts and failed checks. A PR whose checks pass stays in Review or test, however old its last commit is.
+- **The 14 days only count for stuck PRs:** drafts, merge conflicts and failed checks. A PR that is not a draft, has no merge conflict and passes its checks stays in Review or test, however old its last commit is.
+- **A PR that a commit on main mentions gets a card** in Maybe already fixed, even when it is a draft or has a merge conflict. The landed check comes before the stuck check. Only a PR by a maintainer or a bot is left out, because the flow check comes first.
 - **A PR with no checks, or with checks still running,** waits for its author and gets no card.
 - **An `UNKNOWN` merge state counts as no conflict.** Only `CONFLICTING` counts. A PR with passing checks that is still `UNKNOWN` after the three waits shows in Review or test, with no "merge conflict" label. The run prints how many PRs stayed `UNKNOWN`.
 - **`pushedAt` is not the time of the push.** It is the commit date of the newest commit in the PR. A rebase changes it, but a push of an old commit does not. So "14 days" means that the newest commit is 14 days old or more.
 - **front and decide share a column.** The why line on each card says which one it is, and the counts keep them apart.
 - **`new` is saved but not shown.** `pull.py` saves it in `board.json` and counts it in its summary. `page.py` does not use it.
 - **An unknown config key gives no message.** A misspelled key, like `maintaners`, leaves the default in place. A wrong type stops the run, but an unknown key does not.
-- **The config file is read again each time a getter is called.** Importing `pull.py` also reads it, because `pull.py` sets `REPO = conf.repo()` when it loads. The tests import `pull.py` inside `FakeEnv`.
+- **The config file is read again each time a getter is called.** Importing `pull.py` also reads it, because `pull.py` sets `REPO = conf.repo()` when it loads. `tests/test_pull.py` imports `pull.py` inside `FakeEnv`.
 - **The order of the rules decides the result.** When two rules match, the first one wins. So moving one check in `issue_sort()` changes which rule wins.
 - **Only the title and the labels decide an issue's group.** The text of an issue is never read. An issue with a vague title and no labels, like "Something odd", goes to Not sorted yet, however clear its text is.
 - **"Maybe already fixed" looks back 90 days.** That is `main_since`. The Pages build clones REA with `--shallow-since` set to 90 days ago, to match. A commit older than that is not found.
