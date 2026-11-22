@@ -35,3 +35,5 @@ python3 -I -m unittest discover -s tests -p 'test_*.py'
 ```
 
 It must pass with no `config.json`.
+
+A change to a sort rule, a group, a column or how `pull.py` talks to GitHub also updates `docs/how-it-works.md` in the same pull request.
